@@ -1,0 +1,2 @@
+defmodule PhxUi do
+end
