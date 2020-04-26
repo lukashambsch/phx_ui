@@ -8,6 +8,7 @@ defmodule PhxUi.MixProject do
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       description: "Library containing UI components",
+      compilers: [:phoenix] ++ Mix.compilers(),
       package: package(),
       deps: deps()
     ]
@@ -31,6 +32,7 @@ defmodule PhxUi.MixProject do
 
   defp deps do
     [
+      {:phoenix, "~> 1.4.16"},
       {:phoenix_html, "~> 2.14.1"},
       {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"}
     ]
