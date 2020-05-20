@@ -32,7 +32,7 @@ defmodule PhxUi.MixProject do
 
   defp deps do
     [
-      {:phoenix, "~> 1.4.16"},
+      {:phoenix, "~> 1.5.0"},
       {:phoenix_html, "~> 2.14.1"},
       {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"}
     ]
