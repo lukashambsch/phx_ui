@@ -5,10 +5,10 @@ defmodule PhxUi.FormHelpers do
 
   alias Phoenix.HTML
 
-  @input_class "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-  @label_class "block text-gray-700 text-sm font-bold mb-2"
+  @input_class "shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline"
+  @label_class "block text-gray-800 text-sm mb-2"
   @form_class "bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-  @button_class "bg-blue-500 hover:bg-blue-700 text-white tracking-wide py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+  @button_class "disabled:opacity-50 tracking-wide py-2 px-4 rounded focus:outline-none focus:shadow-outline shadow-360"
 
   @spec form_for(HTML.FormData.t(), String.t(), Keyword.t()) :: HTML.Form.t()
   def form_for(form_data, action, options \\ []) do
@@ -36,7 +36,7 @@ defmodule PhxUi.FormHelpers do
 
   @spec text_input_group(HTML.Form.t(), HTML.Form.field()) :: HTML.safe()
   def text_input_group(form, field) do
-    HTML.Tag.content_tag :div, class: "mb-4" do
+    HTML.Tag.content_tag :div, class: "w-full mb-2" do
       [
         label(form, field),
         text_input(form, field),
@@ -48,7 +48,7 @@ defmodule PhxUi.FormHelpers do
   @spec password_input_group(HTML.Form.t(), HTML.Form.field()) ::
           HTML.safe()
   def password_input_group(form, field) do
-    HTML.Tag.content_tag :div, class: "mb-4" do
+    HTML.Tag.content_tag :div, class: "w-full mb-2" do
       [
         label(form, field),
         password_input(form, field),
@@ -59,7 +59,26 @@ defmodule PhxUi.FormHelpers do
 
   @spec submit(String.t(), Keyword.t()) :: HTML.safe()
   def submit(label, options \\ []) do
-    HTML.Form.submit(label, build_options(options, class: @button_class))
+    class = add_colors_to_class(@button_class, options)
+
+    HTML.Form.submit(label, build_options(options, class: class))
+  end
+
+  @spec button(String.t(), Keyword.t()) :: HTML.safe()
+  def button(label, options \\ []) do
+    class = add_colors_to_class(@button_class, options)
+
+    HTML.Form.submit(label, build_options(options, class: class))
+  end
+
+  @spec add_colors_to_class(String.t(), Keyword.t()) :: String.t()
+  defp add_colors_to_class(class, options) do
+    {bg_color, options} = Keyword.pop(options, :bg, "green")
+    {text_color, options} = Keyword.pop(options, :text, "white")
+
+    "#{class} bg-#{bg_color}-500 hover:bg-#{bg_color}-700 text-#{text_color} #{
+      Keyword.get(options, :class, "")
+    }"
   end
 
   @spec build_options(Keyword.t(), Keyword.t()) :: Keyword.t()
